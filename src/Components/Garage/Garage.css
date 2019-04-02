@@ -1,0 +1,53 @@
+.house {
+	background: rgb(243, 226, 195);
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    position: relative;
+    border: 1px dotted black;
+}
+
+p {
+    max-width: 960px;
+    min-width: 500px;
+    margin-left: 10px;
+    display: inline-block;
+	font-family: Arial;
+    font-size: 1.5em;
+	color: rgb(2, 2, 95);
+}
+
+.garage {
+	fill: rgb(248, 246, 245);
+    stroke: black;
+    stroke-width: 0.5px;
+   
+}
+
+.squareSpace {
+	fill: white;
+	stroke: black;
+	stroke-width: 1px;
+}
+
+.groundTrim {
+	fill: grey;
+	stroke: black;
+	stroke-width: 1px;
+}
+
+.door {
+	fill: white;
+	stroke: black;
+}
+
+.doorHandle {
+	fill: lightgrey;
+	stroke: black;
+}
+
+line {
+	stroke: gray;
+	stroke-width: 1px;
+}
