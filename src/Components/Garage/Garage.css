@@ -8,14 +8,23 @@
     
 }
 
-p {
-    max-width: 960px;
-    min-width: 500px;
-    margin-left: 10px;
-    display: inline-block;
-	font-family: Arial;
-    font-size: 1.5em;
-	color: rgb(2, 2, 95);
+form {
+    display: flex;
+    justify-content: center;
+    flex-basis: 960px;
+    flex-shrink: .5;
+    flex-grow: .5;
+    
+    
+}
+
+label {
+    padding-left: 50px;
+    display: flex;
+    flex-basis: 270px;
+    flex-grow: .15;
+    flex-shrink: 0;
+    justify-content: space-between;
 }
 
 .garage {
@@ -32,9 +41,9 @@ p {
 }
 
 .groundTrim {
-	fill: grey;
+	fill: rgb(172, 170, 170);
 	stroke: black;
-	stroke-width: 1px;
+	stroke-width: .5px;
 }
 
 .door {
@@ -78,4 +87,25 @@ line {
     width: 45px;
     height: 35px;
     opacity: .7;
+}
+
+#hammer {
+    width: 40px;
+    height: 40px;
+}
+
+#saw {
+    width: 60px;
+}
+
+#chainsaw {
+    width: 70px;
+}
+
+#screws {
+    width: 15px;
+}
+
+#tapemeasure {
+    width: 22px;
 }
