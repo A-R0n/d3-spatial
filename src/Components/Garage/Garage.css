@@ -47,7 +47,24 @@ p {
 	stroke: black;
 }
 
+.doorOpenEdge {
+    stroke-width: 0.35px;
+}
+
 line {
 	stroke: gray;
 	stroke-width: 1px;
+}
+
+#backdrop {
+    stroke: black;
+}
+
+#doorFrame, .doorOpenEdge {
+    stroke: black;
+}
+
+#fishTank {
+    width: 45px;
+    height: 30px;
 }
