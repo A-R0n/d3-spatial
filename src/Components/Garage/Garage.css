@@ -1,11 +1,11 @@
 .house {
-	background: rgb(243, 226, 195);
+	/* background: rgb(243, 226, 195); */
 	margin: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
     position: relative;
-    border: 1px dotted black;
+    
 }
 
 p {
@@ -26,7 +26,7 @@ p {
 }
 
 .squareSpace {
-	fill: white;
+	fill: silver;
 	stroke: black;
 	stroke-width: 1px;
 }
@@ -43,7 +43,7 @@ p {
 }
 
 .doorHandle {
-	fill: lightgrey;
+	fill: rgb(165, 108, 42);
 	stroke: black;
 }
 
@@ -52,12 +52,16 @@ p {
 }
 
 line {
-	stroke: gray;
+	stroke: black;
 	stroke-width: 1px;
 }
 
 #backdrop {
     stroke: black;
+}
+
+#backbackdrop {
+    stroke-width: 0.25;
 }
 
 #doorFrame, .doorOpenEdge {
@@ -67,4 +71,11 @@ line {
 #fishTank {
     width: 45px;
     height: 30px;
+    opacity: .7;
+}
+
+#fishTable {
+    width: 45px;
+    height: 35px;
+    opacity: .7;
 }

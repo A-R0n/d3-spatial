@@ -13,7 +13,7 @@ export default class Garage extends Component{
 
         svg.append('rect').attr('class', 'squareSpace').attr('x', 65).attr('y', 40).attr('width', 420).attr('height', 270);
 
-        var lines = d3.select('.squareSpace').call(draw);
+        var countainerMount = d3.select('.squareSpace').call(draw);
         svg.append('rect').attr('class', 'groundTrim').attr('x', 65).attr('y', 305).attr('width', 420).attr('height', 5);
         svg.append('rect').attr('class', 'door').attr('x', 370).attr('y', 80).attr('width', 100).attr('height', 225);
         
@@ -35,10 +35,14 @@ export default class Garage extends Component{
         svg.append('circle').attr('class', 'doorHandle').attr('cx', 420).attr('cy', 188).attr('r', 4.5);
         svg.append('circle').attr('class', 'doorHandle').attr('cx', 413).attr('cy', 188).attr('r', 3.15);
 
-        svg.append('line').attr('id', 'backdrop').attr('x1', 370).attr('y1', 200).attr('x2', 415).attr('y2', 200);
+        // svg.append('line').attr('id', 'backdrop').attr('x1', 370).attr('y1', 200).attr('x2', 415).attr('y2', 200);
+        svg.append('line').attr('id', 'backbackdrop').attr('x1', 370).attr('y1', 145).attr('x2', 415).attr('y2', 145);
 
-        var clipPath = svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1519/1519002.svg').attr('id', 'fishTank').attr('x', 370).attr('y', 100);
-        
+
+        svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1519/1519002.svg').attr('id', 'fishTank').attr('x', 370).attr('y', 100);
+        svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1661/1661318.svg').attr('id', 'fishTable').attr('x', 370).attr('y', 117);
+        svg.append('image').attr('href', 'https://i1.wp.com/teameverlast.everlast.com/wp-content/uploads/2016/07/2000px-Everlast-logo-2011.svg_.png?resize=300%2C197&ssl=1').attr('id', 'fishTable').attr('x', 95).attr('y', 190);
+
         // d3.select('door').append('rect').attr('class', 'doorOpen');
         function draw(selection){
             var xy0, 
@@ -68,6 +72,35 @@ export default class Garage extends Component{
                         path.attr('d', Line);
                     }
                 });
+
+            
+
+            var linkVertical = d3.linkVertical()
+                .x(function(d) { return d.x; })
+                .y(function(d) { return d.y; });
+                
+            var linksData = [{source: {y: 35, x: 110}, target: {y: 230, x: 110}}]
+
+            
+            const ellipses = [
+                {"cx":  110, "cy":  35, "rx": 12.5, "ry": 2.5},
+                {"cx":  110, "cy":  200, "rx": 37.5, "ry": 70}
+            ];
+
+            const svgEllipses = svg
+  		        .selectAll("ellipse")
+  		        .data(ellipses)
+  		        .enter()
+                .append("ellipse");
+                  
+            svgEllipses
+    	        .attr("cx", (d,i) => { return d.cx; })
+    	        .attr("cy", (d,i) => { return d.cy; })
+    	        .attr("rx", (d,i) => { return d.rx; })
+    	        .attr("ry", (d,i) => { return d.ry; });
+                  
+            svg.selectAll('ellipses').data(linksData).enter().append('path').attr("stroke", "black").attr('d', linkVertical);
+            svgEllipses.filter(':nth-child(3n)').attr('fill', 'tan').attr('stroke', 'black'); 
         }
         
        
