@@ -83,7 +83,7 @@ line {
     opacity: .7;
 }
 
-#fishTable {
+#fishTable, #everlast {
     width: 45px;
     height: 35px;
     opacity: .7;
@@ -108,4 +108,15 @@ line {
 
 #tapemeasure {
     width: 22px;
+}
+
+#smallContainer {
+    width: 40px;
+}
+
+.containerMount {
+    stroke: red;
+    stroke-width: 1.5px;
+    fill: white;
+    
 }
