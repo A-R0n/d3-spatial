@@ -11,7 +11,7 @@ export default class Garage extends Component {
             bottomPoint: null,
             hammer: [50, 330],
             saw: [150, 315],
-            chainsaw: [250, 320],
+            chainsaw: [250, 320, 6],
             screws: [350, 320],
             tapemeasure: [420, 335]
 		};
@@ -54,23 +54,14 @@ export default class Garage extends Component {
 		svg.append('line').attr('id', 'doorFrame').attr('x1', 415).attr('y1', 88).attr('x2', 462).attr('y2', 82);
 		svg.append('line').attr('id', 'doorFrame').attr('x1', 415).attr('y1', 265).attr('x2', 462).attr('y2', 300);
 
-		svg
-			.append('ellipse')
-			.attr('class', 'doorHandleBase')
-			.attr('cx', 420)
-			.attr('cy', 188)
-			.attr('rx', 2.25)
-			.attr('ry', 5)
-			.attr('fill', '#282828')
-			.attr('stroke', '#282828');
+		svg.append('ellipse').attr('class', 'doorHandleBase').attr('cx', 420).attr('cy', 188).attr('rx', 2.25).attr('ry', 5).attr('fill', '#282828').attr('stroke', '#282828');
 		svg.append('circle').attr('class', 'doorHandle').attr('cx', 414).attr('cy', 188).attr('r', 3.5);
 
 		svg.append('line').attr('id', 'backbackdrop').attr('x1', 370).attr('y1', 145).attr('x2', 415).attr('y2', 145);
 
 		svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1519/1519002.svg').attr('id', 'fishTank').attr('x', 370).attr('y', 100);
 		svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1661/1661318.svg').attr('id', 'fishTable').attr('x', 370).attr('y', 117);
-		svg.append('image').attr('href', 'https://i1.wp.com/teameverlast.everlast.com/wp-content/uploads/2016/07/2000px-Everlast-logo-2011.svg_.png?resize=300%2C197&ssl=1')
-			.attr('id', 'everlast').attr('x', 95).attr('y', 190);
+		svg.append('image').attr('href', 'https://i1.wp.com/teameverlast.everlast.com/wp-content/uploads/2016/07/2000px-Everlast-logo-2011.svg_.png?resize=300%2C197&ssl=1').attr('id', 'everlast').attr('x', 95).attr('y', 190);
         
         var tools = svg.append('g').attr('class', 'tools');
         var hammer = tools.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1538/1538118.svg').attr('id', 'hammer').attr('x', 50).attr('y', 330).data([this.state.hammer]).enter();
@@ -145,13 +136,15 @@ export default class Garage extends Component {
             d3.event.on("drag", dragged).on("end", ended);
         }
             function dragged(d) {
-                d[0] = Math.max(45, Math.min(width - 66, d3.event.x))
-                d[1] = Math.max(20, Math.min(height-80, d3.event.y))
-              d3.select(this).raise().attr("x", d[0]).attr("y", d[1]);
+                d.x = Math.max(0, Math.min(width-100, d3.event.x))
+                d.y = Math.max(0, Math.min(height-100, d3.event.y))
+              d3.select(this).raise().attr("x", d.x).attr("y", d.y);
             }
           
             function ended(d) {
+                console.log(d)
               d3.select(this).classed("dragging", false);
+              
             }
           
           
