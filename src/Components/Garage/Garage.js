@@ -8,7 +8,12 @@ export default class Garage extends Component {
 
 		this.state = {
             value: 'small',
-            bottomPoint: null
+            bottomPoint: null,
+            hammer: [50, 330],
+            saw: [150, 315],
+            chainsaw: [250, 320],
+            screws: [350, 320],
+            tapemeasure: [420, 335]
 		};
 	}
 
@@ -21,7 +26,7 @@ export default class Garage extends Component {
 		const width = 580 - margin.left - margin.right;
 		const height = 460 - margin.top - margin.bottom;
 		var svg = d3.select('body').append('svg').attr('class', 'house').attr('width', width).attr('height', height);
-        // const drag = d3.drag().on('start', started).on('drag', dragged).on('end', ended);
+        const drag = d3.drag().on('start', started).on('drag', dragged).on('end', ended);
 		svg.append('rect').attr('class', 'garage').attr('x', 20).attr('y', 20).attr('width', 500).attr('height', 380);
 
 		svg
@@ -66,18 +71,18 @@ export default class Garage extends Component {
 		svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1661/1661318.svg').attr('id', 'fishTable').attr('x', 370).attr('y', 117);
 		svg.append('image').attr('href', 'https://i1.wp.com/teameverlast.everlast.com/wp-content/uploads/2016/07/2000px-Everlast-logo-2011.svg_.png?resize=300%2C197&ssl=1')
 			.attr('id', 'everlast').attr('x', 95).attr('y', 190);
-        var hammer = svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1538/1538118.svg').attr('id', 'hammer').attr('x', 50).attr('y', 330)
-          hammer.call(d3.drag().on("start", d => started(d)));
-
-
-        var saw = svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1538/1538124.svg').attr('id', 'saw').attr('x', 150).attr('y', 315)
-           
-        var chainsaw = svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/123/123935.svg').attr('id', 'chainsaw').attr('x', 250).attr('y', 320)
-           
-        var screws = svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/289/289690.svg').attr('id', 'screws').attr('x', 350).attr('y', 320)
-            
-		var tapemeasure = svg.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1589/1589247.svg').attr('id', 'tapemeasure').attr('x', 420).attr('y', 335)
-            
+        
+        var tools = svg.append('g').attr('class', 'tools');
+        var hammer = tools.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1538/1538118.svg').attr('id', 'hammer').attr('x', 50).attr('y', 330).data([this.state.hammer]).enter();
+        var saw = tools.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1538/1538124.svg').attr('id', 'saw').attr('x', 150).attr('y', 315).data([this.state.saw]).enter();;     
+        var chainsaw = tools.append('image').attr('href', 'https://image.flaticon.com/icons/svg/123/123935.svg').attr('id', 'chainsaw').attr('x', 250).attr('y', 320).data([this.state.chainsaw]).enter();;     
+        var screws = tools.append('image').attr('href', 'https://image.flaticon.com/icons/svg/289/289690.svg').attr('id', 'screws').attr('x', 350).attr('y', 320).data([this.state.screws]).enter();;   
+		var tapemeasure = tools.append('image').attr('href', 'https://image.flaticon.com/icons/svg/1589/1589247.svg').attr('id', 'tapemeasure').attr('x', 420).attr('y', 335).data([this.state.tapemeasure]).enter();;
+        d3.selectAll('#hammer').call(drag);
+        d3.selectAll('#saw').call(drag);
+        d3.selectAll('#chainsaw').call(drag);
+        d3.selectAll('#screws').call(drag);
+        d3.selectAll('#tapemeasure').call(drag);
 
 		function draw(selection) {
 			var xy0,
@@ -135,22 +140,20 @@ export default class Garage extends Component {
 			
         }
 
-        function started() {
-          
-            
-            var tool = d3.select(this).classed("dragging", true);
-            console.log(tool)
+        function started(d) {
+            d3.select(this).classed("dragging", true);
             d3.event.on("drag", dragged).on("end", ended);
-          
-            function dragged() {
-                console.log('hi')
-            //   tool.raise().attr("x", coords.x = d3.event.x).attr("y", coords.y = d3.event.y);
+        }
+            function dragged(d) {
+                d[0] = Math.max(45, Math.min(width - 66, d3.event.x))
+                d[1] = Math.max(20, Math.min(height-80, d3.event.y))
+              d3.select(this).raise().attr("x", d[0]).attr("y", d[1]);
             }
           
-            function ended() {
-              tool.classed("dragging", false);
+            function ended(d) {
+              d3.select(this).classed("dragging", false);
             }
-          }
+          
           
 
     }
