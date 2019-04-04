@@ -254,14 +254,8 @@ export default class Garage extends Component {
             lPoints.push(newLine.getPointAtLength(j));
         }
         var length = lPoints.length;
-       var lastCoord = lPoints[length - 1];
-
-        
-        
-        
 		var p = newLine.getPointAtLength([ 0 ]);
         var q = lPoints[length - 1];
-       
 		var path = d3.path();
 		d3.select('#space').remove().exit();
 		if (this.state.value === 'small') {
@@ -315,6 +309,8 @@ export default class Garage extends Component {
         
 		return (
 			<form onSubmit={this.handleSubmit}>
+               <p id='problem'>How do I maximize the value of space in my garage?</p>
+      <p id='instructions'>1) Create a mount by clicking on the bottom of the wall, dragging up, then releasing click.</p>
 				<label>
 					2) Choose a container to store your tool:
 					<select value={this.state.value} onChange={this.handleChange}>
@@ -322,8 +318,9 @@ export default class Garage extends Component {
 						<option value="medium">medium</option>
 						<option value="large">large</option>
 					</select>
+                    <input type="submit" value="Submit" />
 				</label>
-				<input type="submit" value="Submit" />
+				
 				<label>3) Drag tool into the bin.</label>
 			</form>
 		);

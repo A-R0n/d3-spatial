@@ -10,22 +10,11 @@
 
 form {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    flex-basis: 960px;
-    flex-shrink: .5;
-    flex-grow: .5;
-    
-    
 }
 
-label {
-    padding-left: 50px;
-    display: flex;
-    flex-basis: 270px;
-    flex-grow: .15;
-    flex-shrink: 0;
-    justify-content: space-between;
-}
+
 
 .garage {
 	fill: rgb(248, 246, 245);
