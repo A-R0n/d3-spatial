@@ -246,11 +246,22 @@ export default class Garage extends Component {
 	handleSubmit = (event) => {
         var space = 0;
 		event.preventDefault();
-
+        var lPoints = [];
+        
 		const newLine = d3.select('.containerMount').node();
-		var l = newLine.getTotalLength();
+        var l = newLine.getTotalLength();
+        for (var j = 0; j < l; j++) {
+            lPoints.push(newLine.getPointAtLength(j));
+        }
+        var length = lPoints.length;
+       var lastCoord = lPoints[length - 1];
+
+        
+        
+        
 		var p = newLine.getPointAtLength([ 0 ]);
-		var q = newLine.getPointAtLength(10 * l);
+        var q = lPoints[length - 1];
+       
 		var path = d3.path();
 		d3.select('#space').remove().exit();
 		if (this.state.value === 'small') {
@@ -313,7 +324,7 @@ export default class Garage extends Component {
 					</select>
 				</label>
 				<input type="submit" value="Submit" />
-				<label>3) Drag tool into into bin.</label>
+				<label>3) Drag tool into the bin.</label>
 			</form>
 		);
 	}
