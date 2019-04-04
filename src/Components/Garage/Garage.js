@@ -106,7 +106,7 @@ export default class Garage extends Component {
 			.attr('id', 'hammer')
 			.attr('x', 50)
 			.attr('y', 330)
-			.datum([ this.state.hammer ])
+			.data([ this.state.hammer ])
 			.enter();
 		tools
 			.append('image')
@@ -114,7 +114,7 @@ export default class Garage extends Component {
 			.attr('id', 'saw')
 			.attr('x', 150)
 			.attr('y', 315)
-			.datum([ this.state.saw ])
+			.data([ this.state.saw ])
 			.enter();
 		tools
 			.append('image')
@@ -122,7 +122,7 @@ export default class Garage extends Component {
 			.attr('id', 'chainsaw')
 			.attr('x', 250)
 			.attr('y', 320)
-			.datum([ this.state.chainsaw ])
+			.data([ this.state.chainsaw ])
 			.enter();
 		tools
 			.append('image')
@@ -130,7 +130,7 @@ export default class Garage extends Component {
 			.attr('id', 'screws')
 			.attr('x', 350)
 			.attr('y', 320)
-			.datum([ this.state.screws ])
+			.data([ this.state.screws ])
 			.enter();
 		tools
 			.append('image')
@@ -138,7 +138,7 @@ export default class Garage extends Component {
 			.attr('id', 'tapemeasure')
 			.attr('x', 420)
 			.attr('y', 335)
-			.datum([ this.state.tapemeasure ])
+			.data([ this.state.tapemeasure ])
             .enter();
 
 		d3.selectAll('#hammer').call(d3.drag().subject({x:50,y:330}).on('start', started).on('drag', dragged).on('end', ended));
@@ -213,13 +213,13 @@ export default class Garage extends Component {
 			d3.event.on('drag', dragged).on('end', ended);
 		}
 		function dragged(d) {
-            console.log('d', d);
             console.log('this', this)
 			d3.select(this).attr('x',  d3.event.x).attr('y', d3.event.y);
 		}
 
 		function ended(d) {
-            
+            console.log(d)
+            console.log(space)
 			var textInContainer = 
                d3.select('#space')
                 .data([d])
@@ -231,9 +231,7 @@ export default class Garage extends Component {
 				.text((d) => {
                     console.log(d)
 					return `${parseInt(d[2]) + parseInt(space)}` + `%`;
-                })
-				.attr('x', d => d.x)
-				.attr('y', d => d.y);
+                });
             d3.select(this).style('opacity', 0);
            space += d[2]
             d3.select(this).classed('dragging', false);
@@ -303,6 +301,7 @@ export default class Garage extends Component {
 		}
 	};
 	render() {
+        
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<label>
