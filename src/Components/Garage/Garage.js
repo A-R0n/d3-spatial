@@ -10,11 +10,12 @@ export default class Garage extends Component {
 			value: 'small',
 			bottomPoint: null,
 			hammer: [ 50, 330, 12 ],
-			saw: [ 150, 315, 10 ],
-			chainsaw: [ 250, 320, 20 ],
+			saw: [ 150, 315, 30 ],
+			chainsaw: [ 250, 320, 60 ],
 			screws: [ 350, 320, 1.05 ],
-			tapemeasure: [ 420, 335, 4 ],
-			lowerBox: 0
+			tapemeasure: [ 420, 335, 8 ],
+            lowerBox: 0,
+            space: 5
 		};
 	}
 
@@ -23,7 +24,8 @@ export default class Garage extends Component {
 	}
 
 	drawGarage = () => {
-        var space = 0;
+        const {value, bottomPoint, hammer, saw, chainsaw, screws, tapemeasure, lowerBox} = this.state;
+       var space = 0;
 		const margin = { top: 20, right: 20, bottom: 20, left: 20 };
 		const width = 580 - margin.left - margin.right;
 		const height = 460 - margin.top - margin.bottom;
@@ -106,7 +108,7 @@ export default class Garage extends Component {
 			.attr('id', 'hammer')
 			.attr('x', 50)
 			.attr('y', 330)
-			.data([ this.state.hammer ])
+			.data([ hammer ])
 			.enter();
 		tools
 			.append('image')
@@ -114,7 +116,7 @@ export default class Garage extends Component {
 			.attr('id', 'saw')
 			.attr('x', 150)
 			.attr('y', 315)
-			.data([ this.state.saw ])
+			.data([ saw ])
 			.enter();
 		tools
 			.append('image')
@@ -122,7 +124,7 @@ export default class Garage extends Component {
 			.attr('id', 'chainsaw')
 			.attr('x', 250)
 			.attr('y', 320)
-			.data([ this.state.chainsaw ])
+			.data([ chainsaw ])
 			.enter();
 		tools
 			.append('image')
@@ -130,7 +132,7 @@ export default class Garage extends Component {
 			.attr('id', 'screws')
 			.attr('x', 350)
 			.attr('y', 320)
-			.data([ this.state.screws ])
+			.data([ screws ])
 			.enter();
 		tools
 			.append('image')
@@ -138,7 +140,7 @@ export default class Garage extends Component {
 			.attr('id', 'tapemeasure')
 			.attr('x', 420)
 			.attr('y', 335)
-			.data([ this.state.tapemeasure ])
+			.data([ tapemeasure ])
             .enter();
 
 		d3.selectAll('#hammer').call(d3.drag().subject({x:50,y:330}).on('start', started).on('drag', dragged).on('end', ended));
@@ -159,11 +161,8 @@ export default class Garage extends Component {
 					keep = true;
 					xy0 = d3.mouse(this);
 					path = d3.select('g').append('path').attr('class', 'containerMount').attr('d', line([ xy0, xy0 ]));
-				})
-				.on('mouseup', function() {
-					keep = false;
-				})
-				.on('mousemove', function() {
+                })
+                .on('mousemove', function() {
 					if (keep) {
 						var Line = line([
 							xy0,
@@ -173,7 +172,11 @@ export default class Garage extends Component {
 						]);
 						path.attr('d', Line);
 					}
+				})
+				.on('mouseup', function() {
+					keep = false;
 				});
+				
 
 			const linkVertical = d3
 				.linkVertical()
@@ -213,13 +216,10 @@ export default class Garage extends Component {
 			d3.event.on('drag', dragged).on('end', ended);
 		}
 		function dragged(d) {
-            console.log('this', this)
 			d3.select(this).attr('x',  d3.event.x).attr('y', d3.event.y);
 		}
 
 		function ended(d) {
-            console.log(d)
-            console.log(space)
 			var textInContainer = 
                d3.select('#space')
                 .data([d])
@@ -229,22 +229,26 @@ export default class Garage extends Component {
 
                 d3.select('#space')
 				.text((d) => {
-                    console.log(d)
 					return `${parseInt(d[2]) + parseInt(space)}` + `%`;
                 });
+                if(parseInt(d[2]) + parseInt(space) > 100){
+                    alert('Container has exceeded its limit!')
+                    d3.select('#space').attr('fill', 'red');
+                }
             d3.select(this).style('opacity', 0);
-           space += d[2]
-            d3.select(this).classed('dragging', false);
-            
+            space += d[2];
+            d3.select(this).classed('dragging', false);  
 		}
 	};
 
 	handleChange = (event) => {
-		this.setState({ value: event.target.value, bottomPoint: !this.state.bottomPoint });
+        const {value, bottomPoint} = this.state;
+		this.setState({ value: event.target.value, bottomPoint: !bottomPoint });
 	};
 
 	handleSubmit = (event) => {
-        var space = 0;
+        const {lowerBox, value} = this.state;
+       var space = 0;
 		event.preventDefault();
         var lPoints = [];
         
@@ -258,11 +262,26 @@ export default class Garage extends Component {
         var q = lPoints[length - 1];
 		var path = d3.path();
 		d3.select('#space').remove().exit();
-		if (this.state.value === 'small') {
+		if (value === 'small') {
 			path.moveTo(p.x, p.y);
-			path.lineTo(p.x, p.y - 3 / 4 * l - 25 + this.state.lowerBox);
-			path.rect(p.x - 15, p.y - 3 / 4 * l - 40 + this.state.lowerBox, 30, 15);
-			path.moveTo(p.x, p.y - 3 / 4 * l - 40 + this.state.lowerBox);
+			path.lineTo(p.x, p.y - 3 / 4 * l - 25 + lowerBox);
+			path.rect(p.x - 15, p.y - 3 / 4 * l - 40 + lowerBox, 30, 15);
+			path.moveTo(p.x, p.y - 3 / 4 * l - 40 + lowerBox);
+			path.lineTo(p.x, q.y);
+			d3.select('.containerMount').attr('d', path).style('stroke', '#49fb35');
+			d3
+				.select('g')
+				.append('text')
+				.attr('id', 'space')
+				.text(`${space}` + '%')
+				.attr('x', p.x - 12)
+				.attr('y', p.y - 3 / 4 * l - 28 + lowerBox);
+            this.setState({ lowerBox: lowerBox + 30});
+		} else if (value === 'medium') {
+			path.moveTo(p.x, p.y);
+			path.lineTo(p.x, p.y - 1 / 3 * l + lowerBox);
+			path.rect(p.x - 25, p.y - 1 / 3 * l - 50 + lowerBox, 50, 50);
+			path.moveTo(p.x, p.y - 1 / 3 * l - 50 + lowerBox);
 			path.lineTo(p.x, q.y);
 			d3.select('.containerMount').attr('d', path).style('stroke', '#49fb35');
 			d3
@@ -271,28 +290,13 @@ export default class Garage extends Component {
 				.attr('id', 'space')
 				.text(`${space}` + '%')
 				.attr('x', p.x - 10)
-				.attr('y', p.y - 3 / 4 * l - 28 + this.state.lowerBox);
-			this.setState({ lowerBox: this.state.lowerBox + 30 });
-		} else if (this.state.value === 'medium') {
-			path.moveTo(p.x, p.y);
-			path.lineTo(p.x, p.y - 1 / 3 * l + this.state.lowerBox);
-			path.rect(p.x - 25, p.y - 1 / 3 * l - 50 + this.state.lowerBox, 50, 50);
-			path.moveTo(p.x, p.y - 1 / 3 * l - 50 + this.state.lowerBox);
-			path.lineTo(p.x, q.y);
-			d3.select('.containerMount').attr('d', path).style('stroke', '#49fb35');
-			d3
-				.select('g')
-				.append('text')
-				.attr('id', 'space')
-				.text(`${space}` + '%')
-				.attr('x', p.x - 10)
-				.attr('y', p.y - 1 / 3 * l - 23 + this.state.lowerBox);
-			this.setState({ lowerBox: this.state.lowerBox + 30 });
+				.attr('y', p.y - 1 / 3 * l - 23 + lowerBox);
+			this.setState({ lowerBox: lowerBox + 30});
 		} else {
 			path.moveTo(p.x, p.y);
-			path.lineTo(p.x, p.y - 2 / 7 * l + this.state.lowerBox);
-			path.rect(p.x - 50, p.y - 2 / 7 * l - 40 + this.state.lowerBox, 100, 40);
-			path.moveTo(p.x, p.y - 2 / 7 * l - 40 + this.state.lowerBox);
+			path.lineTo(p.x, p.y - 2 / 7 * l + lowerBox);
+			path.rect(p.x - 50, p.y - 2 / 7 * l - 40 + lowerBox, 100, 40);
+			path.moveTo(p.x, p.y - 2 / 7 * l - 40 + lowerBox);
 			path.lineTo(p.x, q.y);
 			d3.select('.containerMount').attr('d', path).style('stroke', '#49fb35');
 			d3
@@ -301,8 +305,8 @@ export default class Garage extends Component {
 				.attr('id', 'space')
 				.text(`${space}` + '%')
 				.attr('x', p.x - 8)
-				.attr('y', p.y - 2 / 7 * l - 16 + this.state.lowerBox);
-			this.setState({ lowerBox: this.state.lowerBox + 30 });
+				.attr('y', p.y - 2 / 7 * l - 16 + lowerBox);
+			this.setState({ lowerBox: lowerBox + 30});
 		}
 	};
 	render() {
@@ -310,7 +314,7 @@ export default class Garage extends Component {
 		return (
 			<form onSubmit={this.handleSubmit}>
                <p id='problem'>How do I maximize the value of space in my garage?</p>
-      <p id='instructions'>1) Create a mount by clicking on the bottom of the wall, dragging up, then releasing click.</p>
+      <p id='instructions'>1) Create a mount by clicking from the bottom of the wall and dragging up.</p>
 				<label>
 					2) Choose a container to store your tool:
 					<select value={this.state.value} onChange={this.handleChange}>
