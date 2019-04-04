@@ -13,7 +13,8 @@ export default class Garage extends Component {
             saw: [150, 315],
             chainsaw: [250, 320, 6],
             screws: [350, 320],
-            tapemeasure: [420, 335]
+            tapemeasure: [420, 335],
+            count: 0
 		};
 	}
 
@@ -142,6 +143,7 @@ export default class Garage extends Component {
             }
           
             function ended(d) {
+                alert('dropped!')
                 console.log(d)
               d3.select(this).classed("dragging", false);
               
@@ -170,31 +172,35 @@ export default class Garage extends Component {
         var path = d3.path();
         if (this.state.value === 'small') {
             path.moveTo(p.x,p.y);
-            path.lineTo(p.x, p.y-(3/4*l) - 25);
-            path.rect(p.x -15, p.y-(3/4*l) - 40, 30, 15);
-            path.moveTo(p.x, p.y-(3/4*l) - 40);
+            path.lineTo(p.x, p.y-(3/4*l) - 25 + this.state.count);
+            path.rect(p.x -15, p.y-(3/4*l) - 40 + this.state.count, 30, 15);
+            path.moveTo(p.x, p.y-(3/4*l) - 40 + this.state.count);
             path.lineTo(p.x, q.y);
+            this.setState({count: this.state.count+30})
             d3.select('.containerMount').attr('d', path).style('stroke', '#49fb35');
         } 
 		if (this.state.value === 'medium') {
             path.moveTo(p.x,p.y);
-            path.lineTo(p.x, p.y-(1/3*l));
-            path.rect(p.x -25, p.y-(1/3*l) - 50, 50, 50);
-            path.moveTo(p.x, p.y-(1/3*l) - 50);
+            path.lineTo(p.x, p.y-(1/3*l) + this.state.count);
+            path.rect(p.x -25, p.y-(1/3*l) - 50 + this.state.count, 50, 50);
+            path.moveTo(p.x, p.y-(1/3*l) - 50 + this.state.count);
             path.lineTo(p.x, q.y);
+            this.setState({count: this.state.count+30})
             d3.select('.containerMount').attr('d', path).style('stroke', '#49fb35');
         } 
         if(this.state.value === 'large') {
             path.moveTo(p.x,p.y);
-            path.lineTo(p.x, p.y-(2/7*l));
-            path.rect(p.x -50, p.y-(2/7*l) - 40, 100, 40);
-            path.moveTo(p.x, p.y-(2/7*l) - 40);
+            path.lineTo(p.x, p.y-(2/7*l) + this.state.count);
+            path.rect(p.x -50, p.y-(2/7*l) - 40 + this.state.count, 100, 40);
+            path.moveTo(p.x, p.y-(2/7*l) - 40 + this.state.count);
             path.lineTo(p.x, q.y);
+            this.setState({count: this.state.count+30})
             d3.select('.containerMount').attr('d', path).style('stroke', '#49fb35');
 		}
 	};
 
 	render() {
+        console.log('count', this.state.count)
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<label>
