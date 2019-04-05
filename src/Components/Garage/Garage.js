@@ -11,7 +11,7 @@ export default class Garage extends Component {
 			bottomPoint: null,
 			hammer: [ 50, 330, 12 ],
 			saw: [ 150, 315, 30 ],
-			chainsaw: [ 250, 320, 60 ],
+			chainsaw: [ 250, 320, 70 ],
 			screws: [ 350, 320, 1.05 ],
 			tapemeasure: [ 420, 335, 8 ],
             lowerBox: 0,
@@ -26,8 +26,8 @@ export default class Garage extends Component {
 	drawGarage = () => {
         const {value, bottomPoint, hammer, saw, chainsaw, screws, tapemeasure, lowerBox} = this.state;
        var space = 0;
-		const margin = { top: 20, right: 20, bottom: 20, left: 20 };
-		const width = 580 - margin.left - margin.right;
+		const margin = { top: 20, right: -20, bottom: 20, left: 0 };
+		const width = 520 - margin.left - margin.right;
 		const height = 460 - margin.top - margin.bottom;
 		var svg = d3.select('body').append('svg').attr('class', 'house').attr('width', width).attr('height', height);
 		svg.append('rect').attr('class', 'garage').attr('x', 20).attr('y', 20).attr('width', 500).attr('height', 380);
@@ -176,9 +176,8 @@ export default class Garage extends Component {
 				.on('mouseup', function() {
 					keep = false;
 				});
-				
-
-			const linkVertical = d3
+	const boxingArea = svg.append('g');
+			const bagLink = d3
 				.linkVertical()
 				.x(function(d) {
 					return d.x;
@@ -188,7 +187,7 @@ export default class Garage extends Component {
 				});
 			const linksData = [ { source: { y: 35, x: 110 }, target: { y: 230, x: 110 } } ];
 			const ellipses = [ { cx: 110, cy: 35, rx: 12.5, ry: 2.5 }, { cx: 110, cy: 200, rx: 37.5, ry: 70 } ];
-			const svgEllipses = svg.selectAll('ellipse').data(ellipses).enter().append('ellipse');
+			const svgEllipses = boxingArea.selectAll('ellipse').data(ellipses).enter().append('ellipse');
 			svgEllipses
 				.attr('cx', (d, i) => {
 					return d.cx;
@@ -202,13 +201,34 @@ export default class Garage extends Component {
 				.attr('ry', (d, i) => {
 					return d.ry;
 				});
-			svg
+			boxingArea
 				.selectAll('ellipses')
 				.data(linksData)
 				.enter()
 				.append('path')
 				.attr('stroke', 'black')
-				.attr('d', linkVertical);
+                .attr('d', bagLink);
+            
+            const movingBagPath = d3.path();
+            movingBagPath.arc(110, 220, 45, 300, 240)
+
+                function translateAlong(path) {
+                    var l = path.getTotalLength();
+                    return function(d, i, a) {
+                        return function(t) {
+                            var p = path.getPointAtLength(t * l);
+                            return `translate(${p.x}, ${p.y})`;
+                        };
+                    };
+                }
+
+                function transition() {
+                    d3.select('#boxingBag')
+                        .transition()
+                        .duration()
+                        .attrTween('transform', translateAlong(movingBagPath.node()))
+                        .on('end', transition);
+                }
 		}
 
 		function started(d) {
@@ -289,7 +309,7 @@ export default class Garage extends Component {
 				.append('text')
 				.attr('id', 'space')
 				.text(`${space}` + '%')
-				.attr('x', p.x - 10)
+				.attr('x', p.x - 12.5)
 				.attr('y', p.y - 1 / 3 * l - 23 + lowerBox);
 			this.setState({ lowerBox: lowerBox + 30});
 		} else {
@@ -310,23 +330,25 @@ export default class Garage extends Component {
 		}
 	};
 	render() {
-        
 		return (
+            <div className='parent'>
+            <p id='problem'>How do I maximize the value of space in my garage?</p>
 			<form onSubmit={this.handleSubmit}>
-               <p id='problem'>How do I maximize the value of space in my garage?</p>
-      <p id='instructions'>1) Create a mount by clicking from the bottom of the wall and dragging up.</p>
-				<label>
-					2) Choose a container to store your tool:
-					<select value={this.state.value} onChange={this.handleChange}>
-						<option value="small">small</option>
-						<option value="medium">medium</option>
-						<option value="large">large</option>
-					</select>
-                    <input type="submit" value="Submit" />
-				</label>
-				
-				<label>3) Drag tool into the bin.</label>
+                <div className='firstTwoQuestions'>
+                <p id='instruction1'>1) Create a mount by clicking from the bottom of the wall and dragging up.</p>
+                <p id='instruction2'> 2) Choose the container you want to store your tool/tools: </p>
+                </div>
+                <div id='instruction2Container'>
+			    <select value={this.state.value} onChange={this.handleChange}>
+				    <option value="small">small</option>
+				    <option value="medium">medium</option>
+				    <option value="large">large</option>
+			    </select>
+                <input type="submit" value="Submit" />
+                </div>
+				<p id='instruction3'>3) Pick up tool with mouse and drag into the new container.</p>
 			</form>
+            </div>
 		);
 	}
 }
