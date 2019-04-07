@@ -43,7 +43,7 @@ export default class Form extends Component {
       path.moveTo(p.x, p.y - 3 / 4 * l - 40 + lowerBox);
       path.lineTo(p.x, q.y);
       d3.select('.containerMount').attr('d', path).style('stroke', '#49fb35');
-      d3.select('g').append('text').attr('id', 'space').text(`${space}` + '%').attr('x', p.x - 12).attr('y', p.y - 3 / 4 * l - 28 + lowerBox);
+      d3.select('g.mountGroup').append('text').attr('id', 'space').text(`${space}` + '%').attr('x', p.x - 12).attr('y', p.y - 3 / 4 * l - 28 + lowerBox);
         this.setState({ lowerBox: lowerBox + 30});
     } 
 
@@ -55,7 +55,7 @@ export default class Form extends Component {
       path.lineTo(p.x, q.y);
       
       d3.select('.containerMount').attr('d', path).style('stroke', '#49fb35');
-      d3.select('g').append('text').attr('id', 'space').text(`${space}` + '%').attr('x', p.x - 12.5).attr('y', p.y - 1 / 3 * l - 23 + lowerBox);
+      d3.select('g.mountGroup').append('text').attr('id', 'space').text(`${space}` + '%').attr('x', p.x - 12.5).attr('y', p.y - 1 / 3 * l - 23 + lowerBox);
   
       this.setState({ lowerBox: lowerBox + 30});
     } 
@@ -67,7 +67,7 @@ export default class Form extends Component {
       path.moveTo(p.x, p.y - 2 / 7 * l - 40 + lowerBox);
       path.lineTo(p.x, q.y);
       d3.select('.containerMount').attr('d', path).style('stroke', '#49fb35');
-      d3.select('g').append('text').attr('id', 'space').text(`${space}` + '%').attr('x', p.x - 8).attr('y', p.y - 2 / 7 * l - 16 + lowerBox);
+      d3.select('g.mountGroup').append('text').attr('id', 'space').text(`${space}` + '%').attr('x', p.x - 8).attr('y', p.y - 2 / 7 * l - 16 + lowerBox);
       
       this.setState({ lowerBox: lowerBox + 30});
     }
