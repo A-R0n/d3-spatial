@@ -30,7 +30,7 @@ export default class Garage extends Component {
 		const margin = { top: 20, right: -20, bottom: 20, left: 0 };
 		const width = 520 - margin.left - margin.right;
 		const height = 460 - margin.top - margin.bottom;
-		var svg = d3.select('body').append('svg').attr('class', 'house').attr('width', width).attr('height', height);
+		var svg = d3.select('.garage').append('svg').attr('class', 'house').attr('width', width).attr('height', height);
 		svg.append('rect').attr('class', 'garage').attr('x', 20).attr('y', 20).attr('width', 500).attr('height', 380);
 
 		svg
