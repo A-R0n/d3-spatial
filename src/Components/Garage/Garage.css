@@ -1,188 +1,86 @@
-svg {
-    padding-top: 30px;
-   
-}
-
-.house {
-    margin: auto;
-    display: flex;
-}
-
-form {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-#problem {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-top: 30px;
-    padding-bottom: 20px;
-    background: rgb(17, 2, 2);
-    color: rgba(235, 217, 161, 0.685);
-    border-bottom: 2px solid rgba(235, 217, 161, 0.685);
-    margin: auto;   
-    font-size: 2em;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-   
-}
-.firstTwoQuestions {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    padding-left: 5px;
-    padding-right: 0px;
-
-}
-
-#instruction1, #instruction2, #instruction3 {
-    padding-left: 5px;
-    width: 540px;
-    border-bottom: 2px dotted black;
-    color: #d7fad3;
-}
-
-#instruction1, #instruction2, #instruction3 {
-    display: flex;
-}
-
-
-#instruction2Container {
-    display: flex;
-    padding-left: 20px;
-    margin: auto;
-  width: 520px;
-   
-}
-
-
-#instruction3 {
-    display: flex;
-    padding-top: 20px;
-    margin: auto;
-}
-
-select {
-    width: 80px;
-    border: 2px solid black;
-    font-weight: bold;
-    
-}
-
-input {
-    width: 80px;
-    border: 2px solid blue;
-    margin-left: 15px;
-    font-weight: bold;
-    
-}
-
-input:hover {
-    border: 2px solid orange;
-    background: black;
-    color: yellow;
-    transform: scale(1.05);
-}
-
-
 .garage {
-	fill: rgb(248, 246, 245);
-    stroke: black;
-    stroke-width: 0.5px;
-   
+	margin: auto;
+	display: flex;
+	background: #eae6da;
 }
 
-.squareSpace {
-	fill: silver;
+.innerGarage {
+	fill: #eae6da;
+}
+
+.mainWall {
 	stroke: black;
-	stroke-width: 1px;
-}
-
-.groundTrim {
-	fill: rgb(172, 170, 170);
-	stroke: black;
-	stroke-width: .5px;
-}
-
-.door {
-	fill: white;
-	stroke: black;
-}
-
-.doorHandle {
-	fill: rgb(165, 108, 42);
-	stroke: black;
-}
-
-.doorOpenEdge {
-    stroke-width: 0.35px;
-}
-
-line {
-	stroke: black;
-	stroke-width: 1px;
-}
-
-#backdrop {
-    stroke: black;
-}
-
-#backbackdrop {
-    stroke-width: 0.25;
-}
-
-#doorFrame, .doorOpenEdge {
-    stroke: black;
-}
-
-#fishTank {
-    width: 45px;
-    height: 30px;
-    opacity: .7;
-}
-
-#fishTable, #everlast {
-    width: 45px;
-    height: 35px;
-    opacity: .7;
-}
-
-#hammer {
-    width: 40px;
-    height: 40px;
-}
-
-#saw {
-    width: 60px;
-}
-
-#chainsaw {
-    width: 70px;
-}
-
-#screws {
-    width: 15px;
-}
-
-#tapemeasure {
-    width: 22px;
-}
-
-#smallContainer {
-    width: 40px;
+	fill: rgba(110, 84, 84, 0.5);
 }
 
 .containerMount {
-    stroke: red;
-    stroke-width: 1.5px;
-    fill: white;
-    
+	stroke: white;
+	stroke-width: 2px;
 }
 
-#space {
-    font-size: .75em;
-    font-weight: bold;
+#startingPoint {
+	stroke-width: 2px;
+	fill: red;
+	stroke: black;
+}
+
+text {
+	stroke: white;
+	font-weight: bold;
+	fill: white;
+}
+
+path {
+	fill: rgb(133, 131, 125);
+	stroke: black;
+	stroke-width: 1px;
+}
+
+.doorWay {
+	fill: rgb(241, 241, 229);
+	stroke: black;
+	background: #eae6da;
+}
+
+.doorEdge {
+	fill: rgba(128, 128, 128, 0.459);
+	stroke-linecap: round;
+}
+
+.doorFace {
+	fill: rgba(190, 174, 159, 0.719);
+	stroke-dasharray: 1000;
+	stroke-width: .7;
+	stroke-dashoffset: 1000;
+	animation: dash 5s linear forwards;
+}
+.doorHandle {
+	fill: rgba(0, 0, 0, 0.5);
+	stroke: black;
+}
+
+#hammer {
+	width: 45px;
+}
+
+#screws {
+	width: 15px;
+}
+
+#tapemeasure {
+	width: 25px;
+}
+
+#chainsaw {
+	width: 70px;
+}
+
+#saw {
+	width: 60px;
+}
+
+@keyframes dash {
+	to {
+		stroke-dashoffset: 0;
+	}
 }
