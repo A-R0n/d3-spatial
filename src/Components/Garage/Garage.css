@@ -14,8 +14,10 @@
 }
 
 .containerMount {
-	stroke: white;
-	stroke-width: 2px;
+    stroke: white;
+    fill: white;
+    stroke-width: 2px;
+    z-index: 0;
 }
 
 #startingPoint {
@@ -25,12 +27,13 @@
 }
 
 text {
-	stroke: white;
+	stroke: black;
 	font-weight: bold;
-	fill: white;
+    fill: black;
+    z-index: 1;
 }
 
-path {
+path.floor, path.ceiling {
 	fill: rgb(133, 131, 125);
 	stroke: black;
 	stroke-width: 1px;
@@ -43,12 +46,14 @@ path {
 }
 
 .doorEdge {
-	fill: rgba(128, 128, 128, 0.459);
+    fill: rgba(128, 128, 128, 0.459);
+    stroke: black;
 	stroke-linecap: round;
 }
 
 .doorFace {
-	fill: rgba(190, 174, 159, 0.719);
+    fill: rgba(190, 174, 159, 0.719);
+    stroke: black;
 	stroke-dasharray: 1000;
 	stroke-width: .7;
 	stroke-dashoffset: 1000;
